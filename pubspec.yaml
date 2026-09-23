@@ -1,0 +1,46 @@
+name: rpmtw_server
+description: RPMTW server, developed using Dart, is the backend of RPMTW services, e.g. Universe Chat, RPMWiki, RPMtranslator...
+version: 1.0.0
+homepage: https://www.rpmtw.com
+publish_to: "none"
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  byte_size: ^2.0.0-nullsafety.0
+  crypto: ^3.0.1
+  dart_jsonwebtoken: ^2.4.1
+  dartdap: ^0.6.5
+  dbcrypt: ^2.0.0
+  dotenv: ^3.0.0
+  grammer: ^1.0.2
+  http: ^0.13.4
+  intl: ^0.17.0
+  json5: ^0.7.0
+  logger: ^1.1.0
+  mailer: ^5.1.0
+  mongo_dart:
+    git: https://github.com/mongo-dart/mongo_dart
+  mustache_template: ^2.0.0
+  path: ^1.8.1
+  pub_semver: ^2.1.1
+  rpmtw_dart_common_library: ^0.0.4
+  shelf: ^1.3.0
+  shelf_cors_headers: ^0.1.3
+  shelf_rate_limiter: ^1.0.1
+  shelf_router: ^1.1.2
+  socket_io: ^1.0.1
+  stream: ^3.0.3
+  # Pinned below 6.4.0: newer xml releases require petitparser ^6.0.0/^7.0.0, which conflicts
+  # with dartdap ^0.6.5's own petitparser ^5.1.0 constraint. 6.3.0 is the last release with a
+  # bundled `xpath.dart` extension compatible with that constraint (see WikiArchiveHandler's
+  # doc comment in lib/handler/translate_handler.dart for what that means for its XPath
+  # feature set).
+  xml: ^6.3.0
+
+dev_dependencies:
+  coverage: ^1.5.0
+  lints: ^1.0.1
+  socket_io_client: ^1.0.2
+  test: ^1.20.2

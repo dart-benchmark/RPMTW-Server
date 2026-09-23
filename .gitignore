@@ -1,0 +1,7 @@
+.env
+.dart_tool
+coverage/
+.packages
+.dart_tool/package_config.json
+.idea
+.ssl
