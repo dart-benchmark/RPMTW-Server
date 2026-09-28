@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:dotenv/dotenv.dart';
+import 'package:rpmtw_server/auth/angel_session_auth.dart';
 import 'package:rpmtw_server/database/database.dart';
 import 'package:rpmtw_server/handler/auth_handler.dart';
 import 'package:rpmtw_server/handler/universe_chat_handler.dart';
 import 'package:rpmtw_server/routes/root_route.dart';
+import 'package:rpmtw_server/routes/session_bootstrap_route.dart';
 
 import 'package:rpmtw_server/utilities/data.dart';
 import 'package:rpmtw_server/utilities/utility.dart';
@@ -29,6 +31,7 @@ Future<void> main(List<String> args) async {
 
 Future<void> run({Parser? envParser}) async {
   Data.init(envParser: envParser);
+  AngelSessionAuth.initialize();
   loggerNoStack.i('connecting to database');
   await DataBase.init();
   final InternetAddress ip = InternetAddress.anyIPv4;
@@ -49,7 +52,12 @@ Future<void> run({Parser? envParser}) async {
     _pipeline.addMiddleware(rateLimiter.rateLimiter());
   }
 
-  final Handler _handler = _pipeline.addHandler(RootRoute().router);
+  final rootRouter = RootRoute().router;
+  // Mount the angel3_auth-backed session-bootstrap tiers onto the same router
+  // the server actually serves, so each tier's session cookie is emitted on a
+  // real request path.
+  SessionBootstrapRoute().register(rootRouter);
+  final Handler _handler = _pipeline.addHandler(rootRouter);
 
   final int port = int.parse(env['API_PORT'] ?? '8080');
   server = await serve(_handler, ip, port,

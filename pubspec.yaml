@@ -8,6 +8,7 @@ environment:
   sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
+  angel3_auth: ^7.0.0
   byte_size: ^2.0.0-nullsafety.0
   crypto: ^3.0.1
   dart_jsonwebtoken: ^2.4.1

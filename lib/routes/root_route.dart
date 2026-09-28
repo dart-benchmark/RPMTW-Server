@@ -8,7 +8,7 @@ import 'package:rpmtw_server/routes/minecraft_route.dart';
 import 'package:rpmtw_server/routes/translate_route.dart';
 import 'package:rpmtw_server/utilities/api_response.dart';
 import 'package:shelf_router/shelf_router.dart';
-
+import 'package:rpmtw_server/routes/ops_alert_route.dart';
 import '../utilities/request_extension.dart';
 import 'package:rpmtw_server/routes/auth_route.dart';
 import 'package:rpmtw_server/routes/storage_route.dart';
@@ -25,7 +25,7 @@ class RootRoute {
     TranslateRoute().register(router);
     CommentRoute().register(router);
     SystemRoute().register(router);
-
+    OpsAlertRoute().register(router);
     router.getRoute('/', (req, data) async {
       return APIResponse.success(data: {'message': 'Hello RPMTW World'});
     });
